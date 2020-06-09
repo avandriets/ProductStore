@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+    postgres:
+      image: postgres
+      restart: always
+      environment:
+        POSTGRES_USER: store
+        POSTGRES_PASSWORD: store
+        POSTGRES_DATABASE: store
+        POSTGRES_ROOT_PASSWORD: store
+        pgdata: data-pstgresql
+      ports:
+      - "5432:5432"
+      volumes:
+      - data-pstgresql:/data
+      - ./database:/docker-entrypoint-initdb.d
+
+volumes:
+    data-pstgresql:
