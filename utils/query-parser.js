@@ -29,6 +29,12 @@ const queryParser = (obj) => {
       case '$iLike':
         accumulator[Op.iLike] = obj[key];
         break;
+      case '$or':
+        accumulator[Op.or] = obj[key];
+        break;
+      case '$and':
+        accumulator[Op.and] = obj[key];
+        break;
       default:
         if (obj[key] && !Array.isArray(obj[key]) && typeof obj[key] === 'object') {
           accumulator[key] = queryParser(obj[key]);
