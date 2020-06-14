@@ -7,6 +7,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const port = process.env.PORT || 3000;
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
@@ -16,4 +18,11 @@ app.use((req, res, next) => {
 
 app.use('/products', productsRoutes);
 
-app.listen(3000);
+app.use((error, req, res, next) => {
+  const { statusCode, message } = error;
+  res.status(statusCode || 500).json({ message });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on PORT ${port}`);
+});
