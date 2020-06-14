@@ -1,11 +1,21 @@
 const Products = require('../models/products');
 const removeFalsyValues = require('../utils/remove-falsy-values');
+const queryParser = require('../utils/query-parser');
 
 module.exports.getProducts = async (req, res, next) => {
-  const { offset, limit } = req.query;
+  const { offset, limit, sort_field, sort, q } = req.query;
+
+  const search = q ? queryParser(JSON.parse(q)) : null;
+
+  const query = {
+    limit: limit || 5,
+    offset: offset || 1,
+    order: sort_field ? [[sort_field, ['asc', 'desc'].includes(sort.toLowerCase()) ? sort : 'ASC']] : null,
+    where: search,
+  };
 
   try {
-    const products = await Products.findAndCountAll({ limit: limit || 5, offset: offset || 1 });
+    const products = await Products.findAndCountAll(removeFalsyValues(query));
 
     res.status(200).json(products);
 

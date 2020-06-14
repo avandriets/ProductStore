@@ -1,5 +1,3 @@
-const { pickBy, identity } = require('lodash');
-
 /**
  * Provides Remove Falsy Values Utility Function.
  */
