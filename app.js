@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const productsRoutes = require('./routes/products');
+const io = require('io');
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use((error, req, res, next) => {
   res.status(statusCode || 500).json({ message });
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is running on PORT ${port}`);
 });
+
+io.init(server);

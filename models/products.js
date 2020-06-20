@@ -1,7 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
+const Model = Sequelize.Model;
 
-const Products = sequelize.define('products', {
+class Products extends Model {
+}
+
+Products.init({
   id: {
     primaryKey: true,
     type: DataTypes.UUID,
@@ -25,7 +29,8 @@ const Products = sequelize.define('products', {
   sequelize,
   timestamps: true,
   createdAt: 'created_at',
-  updatedAt: 'updated_at'
+  updatedAt: 'updated_at',
+  modelName: 'products',
 });
 
 module.exports = Products;
